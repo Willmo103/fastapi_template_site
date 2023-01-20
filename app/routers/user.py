@@ -25,7 +25,7 @@ def get_user(
     return templates.TemplateResponse("user.html", {"request": req, "user": user})
 
 
-@router.put("/{id}", response_class=HTMLResponse)
+@router.put("/{id}", response_model=schemas.UserOut)
 def update_user(
     req: Request,
     id: int,
@@ -66,7 +66,7 @@ def update_user(
     return templates.TemplateResponse("update.html", {"request": req})
 
 
-@router.post("/", status_code=status.HTTP_201_CREATED, response_model=schemas.NewUser)
+@router.post("/", status_code=status.HTTP_201_CREATED, response_model=schemas.UserOut)
 def create_new_user(user: schemas.UserNew, db: Session = Depends(get_db)):
 
     # check first if the user exists

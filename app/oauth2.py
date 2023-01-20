@@ -4,8 +4,8 @@ from app import database, models
 from fastapi import Depends, status, HTTPException
 from fastapi.security import OAuth2PasswordBearer
 from sqlalchemy.orm import Session
-from os import environ as env
 from app.config import settings
+from app.schemas import TokenData
 
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="login")
 
@@ -31,7 +31,7 @@ def verify_access_token(token: str, credentials_exception):
         if id is None:
             raise credentials_exception
 
-        token_data = str(id) if id is not None else None
+        token_data = TokenData(id=id)
 
     except JWTError:
         raise credentials_exception

@@ -1,12 +1,11 @@
 window.addEventListener("load", () => {
-  const form = document.getElementById("login");
+  const form = document.getElementById("update");
 
   form.addEventListener("submit", (event) => {
     event.preventDefault();
     let email = document.querySelector("input[name=email]").value;
     let password = document.querySelector("input[name=password]").value;
     let username = document.querySelector("input[name=username]").value;
-    let newUser = document.querySelector("input[name=newUser]");
     let data = JSON.stringify({
       email: email,
       password: password,
@@ -17,11 +16,9 @@ window.addEventListener("load", () => {
       "Content-Type": "application/json",
       "Access-Control-Origin": "*",
     };
-
-    if (newUser.checked) {
       // TODO: CHANGE HOST
       fetch("http://localhost/user", {
-        method: "POST",
+        method: "PUT",
         headers: headers,
         body: data,
       })
@@ -39,7 +36,7 @@ window.addEventListener("load", () => {
             window.alert("New User Saved! Logging in...");
           }
         });
-    }
+    })
 
     setTimeout(console.log("Logging in..."), 1500);
     //  TODO: CHANGE HOST
