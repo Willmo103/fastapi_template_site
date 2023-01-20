@@ -9,9 +9,10 @@ from app.routers import user, auth
 
 BASE_PATH = Path(__file__).resolve().parent
 templates = Jinja2Templates(directory=str(BASE_PATH / "templates"))
+static_files = Path.joinpath(BASE_PATH, "templates", "static")
 
 app = FastAPI()
-app.mount("/static", StaticFiles(str(templates / "static"), name="static"))
+app.mount("/static", StaticFiles(directory=static_files), name="static")
 
 origins = ["*"]
 

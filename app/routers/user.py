@@ -1,6 +1,6 @@
 from app import models, utils, schemas
 from fastapi.templating import Jinja2Templates
-from fastapi.responses import HTMLResponse, RedirectResponse
+from fastapi.responses import HTMLResponse
 from fastapi import status, HTTPException, Depends, APIRouter, Request
 from sqlalchemy.orm import Session
 from app.database import get_db
@@ -9,7 +9,7 @@ from pathlib import Path
 
 router = APIRouter(prefix="/user", tags=["user"])
 
-BASE_PATH = Path(__file__).resolve().parent
+BASE_PATH = Path(__file__).resolve().parent.parent
 templates = Jinja2Templates(directory=str(BASE_PATH / "templates"))
 
 
@@ -66,7 +66,7 @@ def update_user(
     return templates.TemplateResponse("update.html", {"request": req})
 
 
-@router.post("/", status_code=status.HTTP_201_CREATED, response_model=schemas.UserOut)
+@router.post("/", status_code=status.HTTP_201_CREATED, response_model=schemas.UserSelf)
 def create_new_user(user: schemas.UserNew, db: Session = Depends(get_db)):
 
     # check first if the user exists
