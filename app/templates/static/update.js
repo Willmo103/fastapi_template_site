@@ -5,8 +5,13 @@ window.addEventListener("load", () => {
     event.preventDefault();
     let email = document.querySelector("input[name=email]").value;
     let password = document.querySelector("input[name=password]").value;
+    let username = document.querySelector("input[name=username]").value;
     let newUser = document.querySelector("input[name=newUser]");
-    let data = JSON.stringify({ email: email, password: password });
+    let data = JSON.stringify({
+      email: email,
+      password: password,
+      username: username,
+    });
     // console.log(data);
     const headers = {
       "Content-Type": "application/json",

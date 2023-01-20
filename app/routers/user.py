@@ -1,4 +1,4 @@
-from app import models, utils
+from app import models, utils, schemas
 from fastapi.templating import Jinja2Templates
 from fastapi.responses import HTMLResponse, RedirectResponse
 from fastapi import status, HTTPException, Depends, APIRouter, Request
@@ -7,7 +7,7 @@ from app.database import get_db
 from app.oauth2 import get_current_user
 from pathlib import Path
 
-router = APIRouter(prefix="/users", tags=["users"])
+router = APIRouter(prefix="/user", tags=["user"])
 
 BASE_PATH = Path(__file__).resolve().parent
 templates = Jinja2Templates(directory=str(BASE_PATH / "templates"))
@@ -66,10 +66,9 @@ def update_user(
     return templates.TemplateResponse("update.html", {"request": req})
 
 
-@router.post("/", status_code=status.HTTP_201_CREATED, response_class=HTMLResponse)
-def create_new_user(req: Request, db: Session = Depends(get_db)):
-    user = req.form()
-    # TODO: get form data into a user object
+@router.post("/", status_code=status.HTTP_201_CREATED, response_model=schemas.NewUser)
+def create_new_user(user: schemas.UserNew, db: Session = Depends(get_db)):
+
     # check first if the user exists
     exists = db.query(models.User).filter(models.User.email == user.email).first()
 
@@ -86,7 +85,7 @@ def create_new_user(req: Request, db: Session = Depends(get_db)):
     db.add(new_user)
     db.commit()
     db.refresh(new_user)
-    return templates.TemplateResponse("user.html", {"request": req, "user": new_user})
+    return new_user
 
 
 @router.delete("/")
