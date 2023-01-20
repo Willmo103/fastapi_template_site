@@ -18,30 +18,31 @@ window.addEventListener("load", () => {
     };
 
     if (newUser.checked) {
+      console.log(data);
       // TODO: CHANGE HOST
-      fetch("http://localhost/user", {
+      fetch("http://localhost:8000/user", {
         method: "POST",
         headers: headers,
         body: data,
       })
         .then(function (response) {
-          if (response.ok) {
+          if (response.status === 201) {
             return response.json();
-          } else {
+          } else if (response.status == 409) {
             window.alert("Email already in use!");
-            return;
+            return null;
           }
         })
         .then(function (data) {
-          if (data) {
-            console.log("New User Created\n", data);
+          if (data !== null) {
+            window.alert("New User Created");
           }
         });
     }
 
     setTimeout(console.log("Logging in..."), 1500);
     //  TODO: CHANGE HOST
-    fetch("http://localhost/login", {
+    fetch("http://localhost:8000/login", {
       method: "POST",
       headers: headers,
       body: data,

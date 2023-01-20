@@ -25,7 +25,7 @@ def get_user(
     return templates.TemplateResponse("user.html", {"request": req, "user": user})
 
 
-@router.put("/{id}", response_model=schemas.UserOut)
+@router.put("/", response_model=schemas.UserOut)
 def update_user(
     req: Request,
     id: int,
@@ -66,9 +66,9 @@ def update_user(
     return templates.TemplateResponse("update.html", {"request": req})
 
 
-@router.post("/", status_code=status.HTTP_201_CREATED, response_model=schemas.UserSelf)
+@router.post("/", status_code=status.HTTP_201_CREATED, response_model=schemas.UserLogin)
 def create_new_user(user: schemas.UserNew, db: Session = Depends(get_db)):
-
+    print(user)
     # check first if the user exists
     exists = db.query(models.User).filter(models.User.email == user.email).first()
 

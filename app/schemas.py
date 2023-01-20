@@ -18,8 +18,10 @@ class UserOut(BaseModel):
     class Config:
         orm_mode = True
 
+
 class UserSelf(UserOut):
     password: str
+
 
 class UserLogin(UserNew):
     ...
@@ -32,10 +34,6 @@ class TokenData(BaseModel):
 class Token(BaseModel):
     access_token: str
     token_type: str
-
-
-class MemeData(BaseModel):
-    url: str
 
 
 class AdminUser(BaseModel):

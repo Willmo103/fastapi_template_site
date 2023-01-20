@@ -9,7 +9,7 @@ class User(Base):
 
     password = Column(String, nullable=False)
 
-    name = Column(String, nullable=False)
+    email = Column(String, nullable=False)
 
     username = Column(String, nullable=False)
 
