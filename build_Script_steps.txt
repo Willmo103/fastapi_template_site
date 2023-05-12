@@ -1,0 +1,8 @@
+1 python -m virtualenv venv
+2 requirements.txt
+3 pip install -r requirements 
+4 mkdir app, main.py and __init__.py
+5 alembic init alembic
+---TODO: update connection files---
+6 -- create .gitignore
+7 
